@@ -8,7 +8,7 @@ test('Set empty username and password', t => {
   t.is(err.message, `Wrong credentials configuration`)
 })
 
-test('Set empty username and password', t => {
+test('Set wrong format', t => {
   sdk.configure({format: "xml", credentials: {username: "username", password: "password"}})
   const err = t.throws(() => sdk.create(), ConfigurationWrongFormat)
   t.is(err.name, `ConfigurationWrongFormat`)
