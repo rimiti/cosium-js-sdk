@@ -10,7 +10,7 @@ test.before(t => {
   t.is(instance instanceof SDK, true)
 })
 
-test('Getting available time slots', t => {
+test('Get available time slots', t => {
   t.is(true, true)
 })
 
