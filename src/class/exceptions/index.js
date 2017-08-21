@@ -1,7 +1,7 @@
-import BadCredentials from './authentication/bad_credentials'
-import ConfigurationCredentialsWrong from './configuration/credentials/wrong'
+import AuthenticationBadRequest from './authentication/bad_request'
+import ConfigurationWrongCredentials from './configuration/wrong_credentials'
 
 export {
-  BadCredentials,
-  ConfigurationCredentialsWrong
+  AuthenticationBadRequest,
+  ConfigurationWrongCredentials
 }
