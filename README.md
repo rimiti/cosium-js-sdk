@@ -13,7 +13,7 @@ $ npm install cosium-js-sdk
 ## Tests
 ```js
 // Run tests
-npm run test
+npm test
 ```
 
 ## License
