@@ -1,4 +1,4 @@
-import {ConfigurationCredentialsWrong} from './exceptions'
+import {ConfigurationWrongCredentials} from './exceptions'
 
 export default class Authentication {
 
@@ -30,6 +30,6 @@ export default class Authentication {
   }
 
   _checkConfiguration() {
-    if (!this.username || !this.password) throw new ConfigurationCredentialsWrong()
+    if (!this.username || !this.password) throw new ConfigurationWrongCredentials()
   }
 }
