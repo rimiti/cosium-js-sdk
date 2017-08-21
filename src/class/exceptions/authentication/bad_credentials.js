@@ -7,5 +7,4 @@ export default class BadCredentials extends Exception {
     this.name = this.constructor.name
     this.message = message ? message : `Bad credentials`
   }
-
 }
