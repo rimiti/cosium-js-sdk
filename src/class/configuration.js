@@ -28,11 +28,31 @@ export default class Configuration {
     this._credentials = new Authentication(value)
   }
 
+  get url() {
+    return this._url
+  }
+
+  set url(value) {
+    this._url = value
+  }
+
+  get routes() {
+    return this._routes
+  }
+
+  set routes(value) {
+    this._routes = value
+  }
+
+  /**
+   * @description Get headers pre formatted
+   * @return {{Authorization: *, Accept: string, Content-Type: string}}
+   */
   get headers() {
     return {
-        'Authorization': this._credentials.getAuthentication(),
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+      'Authorization': this._credentials.getAuthentication(),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     }
   }
 
@@ -55,6 +75,6 @@ export default class Configuration {
    * @private
    */
   _itemsToHydrate() {
-    return ['format', 'credentials']
+    return ['format', 'credentials', 'url']
   }
 }
