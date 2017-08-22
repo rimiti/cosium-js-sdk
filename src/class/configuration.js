@@ -28,6 +28,14 @@ export default class Configuration {
     this._credentials = new Authentication(value)
   }
 
+  get headers() {
+    return {
+        'Authorization': this._credentials.getAuthentication(),
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+  }
+
   /**
    * @description Hydrate object from configuration settings
    * @param obj
