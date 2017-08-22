@@ -1,8 +1,0 @@
-{
-	"host": "https://c1.cosium.biz/DECLICRDV00",
-	"api": {
-		"availableTimeslotsUrl": "/api/public/online-booking/query",
-		"createAppointmentUrl": "/api/public/online-booking/book",
-		"cancelAppointmentUrl": "/api/public/online-booking/unbook"
-	}
-}
