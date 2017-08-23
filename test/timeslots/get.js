@@ -41,12 +41,12 @@ test.before(t => {
 // })
 
 
-// test('Get available time slots throws exception when missing mandatory request parameter', t => {
+test('Get available time slots throws exception when missing mandatory request parameter', t => {
 
 //   const err = t.throws(() => instance.getAvailableTimeslots({
 //     siteCode: "c1"
 //   }), MissingMandatoryParameter)
-
-// })
+  t.is(true, true)
+})
 
 
