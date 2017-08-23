@@ -67,3 +67,6 @@ test('Cancel appointment', t => {
   })
     .then((response) => t.deepEqual(response, {"errorCode": null}))
 })
+
+
+// TODO: Tests are missing, you don't test your throwing errors
