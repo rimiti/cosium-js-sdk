@@ -83,5 +83,21 @@ test('Create appointment', t => {
 })
 
 test('Cancel appointment', t => {
-  t.is(true, true)
+
+  fetchMock.post(instance.url + instance.routes.cancelAppointment, {"errorCode":null})
+
+  let params = {
+    "siteCode": "ABC",
+    "bookingId":"1935472128"
+  }
+
+  let expected = {"errorCode":null}
+
+  return instance.cancelAppointment(params).then((resp) => {
+    t.deepEqual(resp, expected)
+
+  })
+
+  fetchMock.restore()
+
 })

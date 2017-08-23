@@ -60,7 +60,23 @@ export default class SDK extends Configuration {
 
   }
 
-  cancelAppointment() {
+  cancelAppointment(params) {
+
+    const options = {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        "siteCode": params.siteCode,
+        "bookingId": params.bookingId
+      })
+    }
+
+    return fetch(this.url + this.routes.cancelAppointment, options)
+      .then(response => {
+        if (response.status >= 400) throw new Error("cancelAppointment: Bad response from server")
+        return response.json()
+      })
+      .then(cancelledAppointement => cancelledAppointement)
 
   }
 
