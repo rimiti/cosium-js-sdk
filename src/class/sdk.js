@@ -1,5 +1,5 @@
 import Configuration from './configuration'
-import fetch from 'isomorphic-fetch'
+import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
 Es6Promise.polyfill()
