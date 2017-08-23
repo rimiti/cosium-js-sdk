@@ -24,13 +24,39 @@ export default class SDK extends Configuration {
 
     return fetch(this.url + this.routes.availableTimeslots, options)
       .then(response => {
-        if (response.status >= 400) throw new Error("Bad response from server")
+        if (response.status >= 400) throw new Error("getAvailableTimeslots: Bad response from server")
         return response.json()
       })
-      .then(availabilities => availabilities.availableTimeSlots)
+      .then(availabilities => availabilities)
   }
 
-  createAppointment() {
+  createAppointment(params) {
+
+    const options = {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        "siteCode": params.siteCode,
+        "date": params.startDate,
+        "object": params.endDate,
+        "category": params.category,
+        "description": params.description,
+        "timeslotDurationInMinutes": params.timeslotDurationInMinutes,
+        "customer": {
+          "firstname": params.customer.firstname,
+          "lastname": params.customer.lastname,
+          "email": params.customer.email,
+          "phone": params.customer.phone
+        }
+      })
+    }
+
+    return fetch(this.url + this.routes.createAppointment, options)
+      .then(response => {
+        if (response.status >= 400) throw new Error("createAppointment: Bad response from server")
+        return response.json()
+      })
+      .then(createdAppointement => createdAppointement)
 
   }
 
