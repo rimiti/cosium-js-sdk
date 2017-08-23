@@ -2,6 +2,7 @@ import Configuration from './configuration'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
+
 Es6Promise.polyfill()
 
 export default class SDK extends Configuration {
@@ -11,7 +12,6 @@ export default class SDK extends Configuration {
   }
 
   getAvailableTimeslots(params) {
-
     const options = {
       method: 'POST',
       headers: this.headers,
@@ -27,17 +27,15 @@ export default class SDK extends Configuration {
         if (response.status >= 400) throw new Error("getAvailableTimeslots: Bad response from server")
         return response.json()
       })
-      .then(availabilities => availabilities)
   }
 
   createAppointment(params) {
-
     const options = {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "date": params.startDate,
+        "date": params.startDate, // TODO: Check datetime format with his own private method
         "object": params.endDate,
         "category": params.category,
         "description": params.description,
@@ -53,15 +51,14 @@ export default class SDK extends Configuration {
 
     return fetch(this.url + this.routes.createAppointment, options)
       .then(response => {
+        // TODO: Throw a custom error
         if (response.status >= 400) throw new Error("createAppointment: Bad response from server")
         return response.json()
       })
       .then(createdAppointement => createdAppointement)
-
   }
 
   cancelAppointment(params) {
-
     const options = {
       method: 'POST',
       headers: this.headers,
@@ -73,19 +70,19 @@ export default class SDK extends Configuration {
 
     return fetch(this.url + this.routes.cancelAppointment, options)
       .then(response => {
+        // TODO: Throw a custom error
         if (response.status >= 400) throw new Error("cancelAppointment: Bad response from server")
         return response.json()
       })
       .then(cancelledAppointement => cancelledAppointement)
-
   }
 
   _daysBetweenTwoDates(start, end) {
-    //
-    // const  = moment(start)
-    // const  = moment(end)
-    // a.diff(b, 'years');
+    // TODO: Compare two dates, if there are more than 20 throw a custom error
+  }
 
+  _datetimeFormat(datetime) {
+    // TODO: If format is not compliant, thrown a custom error
   }
 
 }
