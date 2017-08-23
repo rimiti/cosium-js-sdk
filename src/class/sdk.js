@@ -74,7 +74,6 @@ export default class SDK extends Configuration {
         if (response.status >= 400) throw new Error("cancelAppointment: Bad response from server")
         return response.json()
       })
-      .then(cancelledAppointement => cancelledAppointement)
   }
 
   _daysBetweenTwoDates(start, end) {
