@@ -1,4 +1,5 @@
 import Configuration from './configuration'
+import {MissingMandatoryParameter} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
@@ -25,7 +26,11 @@ export default class SDK extends Configuration {
     return fetch(this.url + this.routes.availableTimeslots, options)
       .then(response => {
         if (response.status >= 400) throw new Error("getAvailableTimeslots: Bad response from server")
+        this._check_error_code(response.body)
         return response.json()
+      }).then(availabilities => {
+        this._check_error_code(availabilities)
+        return availabilities
       })
   }
 
@@ -82,6 +87,10 @@ export default class SDK extends Configuration {
 
   _datetimeFormat(datetime) {
     // TODO: If format is not compliant, thrown a custom error
+  }
+
+  _check_error_code(response) {
+    if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter
   }
 
 }
