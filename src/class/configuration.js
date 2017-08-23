@@ -46,7 +46,7 @@ export default class Configuration {
 
   /**
    * @description Get headers pre formatted
-   * @return {{Authorization: *, Accept: string, Content-Type: string}}
+   * @returns {{Authorization: ({header}|*), Accept: string, Content-Type: string}}
    */
   get headers() {
     return {
@@ -71,10 +71,10 @@ export default class Configuration {
 
   /**
    * @description Return array with items names to hydrate
-   * @return {[string,string]}
+   * @returns {[string,string,string,string]}
    * @private
    */
   _itemsToHydrate() {
-    return ['format', 'credentials', 'url']
+    return ['format', 'credentials', 'url', 'routes']
   }
 }
