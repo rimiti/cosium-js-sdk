@@ -1,5 +1,5 @@
 import Configuration from './configuration'
-import {MissingMandatoryParameter, WrongDatetimes} from './exceptions'
+import {MissingMandatoryParameter, WrongDatetimes, WrongDatetimeValues} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
@@ -82,8 +82,15 @@ export default class SDK extends Configuration {
       })
   }
 
+  /**
+   * @description Check number of days between two dates
+   * @param start
+   * @param end
+   */
   daysBetweenTwoDates(start, end) {
-    if (moment(start).diff(moment(end), 'days') >= 20) throw new WrongDatetimes()
+    const days = moment(start).diff(moment(end), 'days')
+    if (days < 0) throw new WrongDatetimeValues()
+    if (Math.abs(days) >= 20) throw new WrongDatetimes()
   }
 
   _datetimeFormat(datetime) {
