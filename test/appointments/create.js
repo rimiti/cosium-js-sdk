@@ -3,6 +3,7 @@ import sdk from '../../src/lib'
 import SDK from '../../src/class/sdk'
 import mock from 'fetch-mock'
 import {UnknownCategoryCode} from '../../src/class/exceptions'
+import {UnavailableSlot} from '../../src/class/exceptions'
 
 let instance = {}
 
@@ -36,7 +37,7 @@ test('Create appointment without a category not existing', t => {
   mock.post(instance.url + instance.routes.createAppointment,
   {
     "errorCode": "UNKNOWN_CATEGORY_CODE",
-    "errorMessage": "Unknow category code ddd",
+    "errorMessage": "Unknow category code",
     "bookingId": 0
   })
 
@@ -56,5 +57,34 @@ test('Create appointment without a category not existing', t => {
     t.is(e instanceof UnknownCategoryCode, true)
     t.is(e.name, `UnknownCategoryCode`)
     t.is(e.message, `category in request param is unknown`)
+  })
+})
+
+test('Create appointment already not available', t => {
+  mock.restore()
+  mock.post(instance.url + instance.routes.createAppointment,
+  {
+    "errorCode": "UNAVAILABLE_SLOT",
+    "errorMessage": "Time slot unavailable",
+    "bookingId": 0
+  })
+
+  return instance.createAppointment({
+    "siteCode": "c1",
+    "date": "2017-07-29T13:15:00.000Z",
+    "object":"Sujet",
+    "category": "consultation1",
+    "customer":
+     {
+      "firstname":   "Jean",
+         "lastname":"Dupont",
+         "email": "jean.dupont@gmail.com"
+
+     }
+  })
+  .catch(e => {
+    t.is(e instanceof UnavailableSlot, true)
+    t.is(e.name, `UnavailableSlot`)
+    t.is(e.message, `Slot to create is unavailable`)
   })
 })
