@@ -7,7 +7,9 @@ import {
   UnknownCategoryCode,
   UnavailableSlot,
   BookingNotFound,
-  InvalidDatetimeFormat
+  InvalidDatetimeFormat,
+  NotAuthorized,
+  BadRequest
 } from './exceptions'
 
 export default class Validation {
@@ -28,7 +30,9 @@ export default class Validation {
    * @param datetime
    */
   checkDatetimeFormat(datetime) {
-    if (!moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
+    if (!moment(datetime, moment.ISO_8601, true).isValid()) {
+      throw new InvalidDatetimeFormat()
+    }
   }
 
   /**
@@ -40,6 +44,18 @@ export default class Validation {
     else if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode(response.errorMessage)
     else if (response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot(response.errorMessage)
     else if (response.errorCode === 'BOOKING_NOT_FOUND') throw new BookingNotFound(response.errorMessage)
-    else if (response.errorCode !== 'null') throw new UnknownError(response.errorMessage)
+    else if (response.errorCode !== null) throw new UnknownError(response.errorMessage)
+  }
+
+  /**
+   * @description Check htt code status
+   * @param response
+   * @return {*}
+   */
+  checkStatus(response) {
+    if (response.status === 200) return response.json()
+    else if (response.status === 401) throw new NotAuthorized()
+    else if (response.status === 400) throw new BadRequest()
+    else throw new UnknownError(response)
   }
 }
