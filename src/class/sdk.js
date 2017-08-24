@@ -17,6 +17,7 @@ export default class SDK extends Configuration {
    * @return {*|Promise<any>|Promise.<TResult>}
    */
   getAvailableTimeslots(params) {
+    this.validateMandatoryGetAvailableTimeslots(params)
     this.daysBetweenTwoDates(params.startDate, params.endDate)
 
     const options = {
@@ -24,15 +25,15 @@ export default class SDK extends Configuration {
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "startDate": this.checkDatetimeFormat(params.startDate),
-        "endDate": this.checkDatetimeFormat(params.endDate)
+        "startDate": this.datetimeFormat(params.startDate),
+        "endDate": this.datetimeFormat(params.endDate)
       })
     }
 
     return fetch(this.url + this.routes.availableTimeslots, options)
-      .then(response => this.checkStatus(response))
+      .then(response => this.httpStatus(response))
       .then(availabilities => {
-        this.checkErrorCode(availabilities)
+        this.errorCode(availabilities)
         return availabilities
       })
   }
@@ -43,12 +44,14 @@ export default class SDK extends Configuration {
    * @return {*|Promise<any>|Promise.<TResult>}
    */
   createAppointment(params) {
+    this.validateMandatoryCreateAppointment(params)
+
     const options = {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "date": this.checkDatetimeFormat(params.date),
+        "date": this.datetimeFormat(params.date),
         "object": params.endDate,
         "category": params.category,
         "description": params.description,
@@ -63,9 +66,9 @@ export default class SDK extends Configuration {
     }
 
     return fetch(this.url + this.routes.createAppointment, options)
-      .then(response => this.checkStatus(response))
+      .then(response => this.httpStatus(response))
       .then(createdAppointement => {
-        this.checkErrorCode(createdAppointement)
+        this.errorCode(createdAppointement)
         return createdAppointement
       })
   }
@@ -76,6 +79,8 @@ export default class SDK extends Configuration {
    * @return {*|Promise<any>|Promise.<TResult>}
    */
   cancelAppointment(params) {
+    this.validateMandatoryCancelAppointment(params)
+
     const options = {
       method: 'POST',
       headers: this.headers,
@@ -86,9 +91,9 @@ export default class SDK extends Configuration {
     }
 
     return fetch(this.url + this.routes.cancelAppointment, options)
-      .then(response => this.checkStatus(response))
+      .then(response => this.httpStatus(response))
       .then(deletedAppointement => {
-        this.checkErrorCode(deletedAppointement)
+        this.errorCode(deletedAppointement)
         return deletedAppointement
       })
   }
