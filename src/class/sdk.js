@@ -1,5 +1,5 @@
 import Configuration from './configuration'
-import {MissingMandatoryParameter, WrongDatetimes, WrongDatetimeValues, UnknownCategoryCode, UnavailableSlot} from './exceptions'
+import {MissingMandatoryParameter, WrongDatetimes, WrongDatetimeValues, UnknownCategoryCode, UnavailableSlot, BookingNotFound} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
@@ -112,7 +112,8 @@ export default class SDK extends Configuration {
   _checkErrorCode(response) {
     if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter()
     if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode()
-    if(response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot()
+    if (response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot()
+    if (response.errorCode === 'BOOKING_NOT_FOUND') throw new BookingNotFound()
   }
 
 }

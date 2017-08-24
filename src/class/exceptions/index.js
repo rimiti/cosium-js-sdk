@@ -5,7 +5,8 @@ import MissingMandatoryParameter from './api/missing_mandatory_parameter'
 import WrongDatetimeValues from './api/wrong_datetime_values'
 import WrongDatetimes from './api/wrong_datetimes'
 import UnknownCategoryCode from './api/unknown_category_code'
-import UnavailableSlot from './api/unavailable_slot.js'
+import UnavailableSlot from './api/unavailable_slot'
+import BookingNotFound from './api/booking_not_found'
 
 export {
   AuthenticationBadRequest,
@@ -15,5 +16,6 @@ export {
   WrongDatetimeValues,
   WrongDatetimes,
   UnknownCategoryCode,
-  UnavailableSlot
+  UnavailableSlot,
+  BookingNotFound
 }
