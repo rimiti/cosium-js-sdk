@@ -12,7 +12,7 @@ $ npm install cosium-js-sdk
 
 ## Available methods
 
-* **Getting available timeslots**
+* ***Getting available timeslots***
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -40,7 +40,18 @@ Response body example:
 }
 ```
 
-* **Create an appointement**
+request parameter for calling the function:
+
+| Name          | description           | Required  |
+| ------------- |:---------------------:| ---------:|
+| siteCode      | requested center code | true      |
+| startDate     | start date            | true      |
+| endDate       | end date              | true      |
+
+N.B: The difference between startDate and endDate should be at maximum 20 days
+
+
+* ***Create an appointement***
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -68,7 +79,25 @@ Response body example:
 {"errorCode": null, "bookingId": "1935472128"}
 ```
 
-* **Delete an appointement**
+request parameter for calling the function:
+
+| Name                      | description                            | Required  |
+| ------------------------- |:--------------------------------------:| ---------:|
+| siteCode                  | requested center code                  | true      |
+| date                      | date of appointment                    | true      |
+| object                    | object of the appointment              | true      |
+| category                  | code of appointment category           | true      |
+| description               | description of the appointment         | false     |
+| timeslotDurationInMinutes | duration in minutes of the slot        | false     |
+| customer                  | customer informations                  | true      |
+| customer.firstname        | firstname of customer                  | true      |
+| customer.lastname         | lastname of customer                   | true      |
+| customer.email            | email of customer                      | false     |
+| qualification             | desired qualification of the seller    | false     |
+
+N.B: The difference between startDate and endDate should be at maximum 20 days
+
+* ***Delete an appointement***
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -87,6 +116,15 @@ Response body example:
 ```json
 {"errorCode": null}
 ```
+
+request parameter for calling the function:
+
+| Name          | description                                           | Required  |
+| ------------- |:-----------------------------------------------------:| ---------:|
+| siteCode      | requested center code                                 | true      |
+| bookingId     | unique identifier of the reservation to be deleted    | true      |
+
+N.B: The difference between startDate and endDate should be at maximum 20 days
 
 ## Tests
 ```js
