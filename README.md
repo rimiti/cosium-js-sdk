@@ -95,8 +95,6 @@ request parameter for calling the function:
 | customer.email            | email of customer                      | false     |
 | qualification             | desired qualification of the seller    | false     |
 
-N.B: The difference between startDate and endDate should be at maximum 20 days
-
 * ***Delete an appointement***
 
 ```js
@@ -123,8 +121,6 @@ request parameter for calling the function:
 | ------------- |:-----------------------------------------------------:| ---------:|
 | siteCode      | requested center code                                 | true      |
 | bookingId     | unique identifier of the reservation to be deleted    | true      |
-
-N.B: The difference between startDate and endDate should be at maximum 20 days
 
 ## Tests
 ```js
