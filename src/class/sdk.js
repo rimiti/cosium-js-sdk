@@ -1,17 +1,7 @@
 import Configuration from './configuration'
-import {
-  UnknownError,
-  MissingMandatoryParameter,
-  WrongDatetimes,
-  WrongDatetimeValues,
-  UnknownCategoryCode,
-  UnavailableSlot,
-  BookingNotFound,
-  InvalidDatetimeFormat
-} from './exceptions'
+import {} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
-import moment from 'moment'
 
 Es6Promise.polyfill()
 
@@ -21,6 +11,11 @@ export default class SDK extends Configuration {
     super(config)
   }
 
+  /**
+   * @description Get available timeslots between two dates
+   * @param params
+   * @return {*|Promise<any>|Promise.<TResult>}
+   */
   getAvailableTimeslots(params) {
     this.daysBetweenTwoDates(params.startDate, params.endDate)
 
@@ -29,29 +24,35 @@ export default class SDK extends Configuration {
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "startDate": this._checkDatetimeFormat(params.startDate),
-        "endDate": this._checkDatetimeFormat(params.endDate)
+        "startDate": this.checkDatetimeFormat(params.startDate),
+        "endDate": this.checkDatetimeFormat(params.endDate)
       })
     }
 
     return fetch(this.url + this.routes.availableTimeslots, options)
       .then(response => {
         if (response.status >= 400) throw new Error("getAvailableTimeslots: Bad response from server")
-        this._checkErrorCode(response.body)
+        this.checkErrorCode(response.body)
         return response.json()
-      }).then(availabilities => {
-        this._checkErrorCode(availabilities)
+      })
+      .then(availabilities => {
+        this.checkErrorCode(availabilities)
         return availabilities
       })
   }
 
+  /**
+   * @description Create appointment
+   * @param params
+   * @return {*|Promise<any>|Promise.<TResult>}
+   */
   createAppointment(params) {
     const options = {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "date": this._checkDatetimeFormat(params.startDate),
+        "date": this.checkDatetimeFormat(params.startDate),
         "object": params.endDate,
         "category": params.category,
         "description": params.description,
@@ -72,11 +73,16 @@ export default class SDK extends Configuration {
         return response.json()
       })
       .then(createdAppointement => {
-        this._checkErrorCode(createdAppointement)
+        this.checkErrorCode(createdAppointement)
         return createdAppointement
       })
   }
 
+  /**
+   * @description Cancel appointment
+   * @param params
+   * @return {*|Promise<any>|Promise.<TResult>}
+   */
   cancelAppointment(params) {
     const options = {
       method: 'POST',
@@ -94,42 +100,8 @@ export default class SDK extends Configuration {
         return response.json()
       })
       .then(deletedAppointement => {
-        this._checkErrorCode(deletedAppointement)
+        this.checkErrorCode(deletedAppointement)
         return deletedAppointement
       })
   }
-
-  /**
-   * @description Check number of days between two dates
-   * @param start
-   * @param end
-   */
-  daysBetweenTwoDates(start, end) {
-    const days = moment(start).diff(moment(end), 'days')
-    if (days < 0) throw new WrongDatetimeValues()
-    if (Math.abs(days) >= 20) throw new WrongDatetimes()
-  }
-
-  /**
-   * @description Check datetime format
-   * @param datetime
-   * @private
-   */
-  _checkDatetimeFormat(datetime) {
-    if (!moment(datetime, 'YYYY-MM-DD HH:mm:ss', true).isValid()) throw new InvalidDatetimeFormat()
-  }
-
-  /**
-   * @description Check if there is an error in body
-   * @param response
-   * @private
-   */
-  _checkErrorCode(response) {
-    if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter(response.errorMessage)
-    else if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode(response.errorMessage)
-    else if (response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot(response.errorMessage)
-    else if (response.errorCode === 'BOOKING_NOT_FOUND') throw new BookingNotFound(response.errorMessage)
-    else if (response.errorCode !== 'null') throw new UnknownError(response.errorMessage)
-  }
-
 }
