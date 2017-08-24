@@ -4,6 +4,7 @@ import ConfigurationWrongFormat from './configuration/wrong_format'
 import MissingMandatoryParameter from './api/missing_mandatory_parameter'
 import WrongDatetimeValues from './api/wrong_datetime_values'
 import WrongDatetimes from './api/wrong_datetimes'
+import UnknownCategoryCode from './api/unknown_category_code'
 
 export {
   AuthenticationBadRequest,
@@ -11,5 +12,6 @@ export {
   ConfigurationWrongCredentials,
   MissingMandatoryParameter,
   WrongDatetimeValues,
-  WrongDatetimes
+  WrongDatetimes,
+  UnknownCategoryCode
 }

@@ -1,5 +1,5 @@
 import Configuration from './configuration'
-import {MissingMandatoryParameter, WrongDatetimes, WrongDatetimeValues} from './exceptions'
+import {MissingMandatoryParameter, WrongDatetimes, WrongDatetimeValues, UnknownCategoryCode} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
@@ -61,7 +61,10 @@ export default class SDK extends Configuration {
         if (response.status >= 400) throw new Error("createAppointment: Bad response from server")
         return response.json()
       })
-      .then(createdAppointement => createdAppointement)
+      .then(createdAppointement => {
+        this._check_error_code(createdAppointement)
+        return createdAppointement
+      })
   }
 
   cancelAppointment(params) {
@@ -104,6 +107,7 @@ export default class SDK extends Configuration {
    */
   _checkErrorCode(response) {
     if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter()
+    if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode()
   }
 
 }
