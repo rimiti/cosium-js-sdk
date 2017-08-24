@@ -12,7 +12,7 @@ $ npm install cosium-js-sdk
 
 ## Available methods
 
-**Getting available timeslots**
+* **Getting available timeslots**
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -27,8 +27,20 @@ cosium.getAvailableTimeslots(params).then((response) => {
 	console.log(response)
 })
 ```
+Response body example:
 
-**Create an appointement**
+```json
+{
+  "errorCode": null,
+  "errorMessage": null,
+  "availableTimeSlots": [
+    {"date": "2017-09-23T12:00:00.000+0000", "qualifications": ["CONTACT_LENS", "OPTIC", "HEARING_AID"]},
+    {"date": "2017-09-23T12:30:00.000+0000", "qualifications": ["CONTACT_LENS", "OPTIC", "HEARING_AID"]}
+  ]
+}
+```
+
+* **Create an appointement**
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -50,8 +62,13 @@ cosium.createAppointment(params).then((response) => {
 	console.log(response)
 })
 ```
+Response body example:
 
-**Delete an appointement**
+```json
+{"errorCode": null, "bookingId": "1935472128"}
+```
+
+* **Delete an appointement**
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -64,6 +81,11 @@ const params = {
 cosium.cancelAppointment(params).then((response) => {
 	console.log(response)
 })
+```
+Response body example:
+
+```json
+{"errorCode": null}
 ```
 
 ## Tests
