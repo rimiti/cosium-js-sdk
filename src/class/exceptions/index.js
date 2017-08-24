@@ -20,7 +20,6 @@ export {
   UnknownCategoryCode,
   UnavailableSlot,
   UnknownError,
-  UnavailableSlot,
   InvalidDatetimeFormat,
   BookingNotFound
 }
