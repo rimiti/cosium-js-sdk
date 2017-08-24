@@ -50,6 +50,7 @@ request parameter for calling the function:
 
 N.B: The difference between startDate and endDate should be at maximum 20 days
 
+<br/>
 
 * ***Create an appointement***
 
@@ -94,6 +95,8 @@ request parameter for calling the function:
 | customer.lastname         | lastname of customer                   | true      |
 | customer.email            | email of customer                      | false     |
 | qualification             | desired qualification of the seller    | false     |
+
+<br/>
 
 * ***Delete an appointement***
 
