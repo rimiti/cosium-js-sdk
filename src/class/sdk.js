@@ -1,5 +1,5 @@
 import Configuration from './configuration'
-import {} from './exceptions'
+import {NotAuthorized, BadRequest, UnknownError} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 
@@ -30,11 +30,7 @@ export default class SDK extends Configuration {
     }
 
     return fetch(this.url + this.routes.availableTimeslots, options)
-      .then(response => {
-        if (response.status >= 400) throw new Error("getAvailableTimeslots: Bad response from server")
-        this.checkErrorCode(response.body)
-        return response.json()
-      })
+      .then(response => this.checkStatus(response))
       .then(availabilities => {
         this.checkErrorCode(availabilities)
         return availabilities
@@ -52,7 +48,7 @@ export default class SDK extends Configuration {
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "date": this.checkDatetimeFormat(params.startDate),
+        "date": this.checkDatetimeFormat(params.date),
         "object": params.endDate,
         "category": params.category,
         "description": params.description,
@@ -67,11 +63,7 @@ export default class SDK extends Configuration {
     }
 
     return fetch(this.url + this.routes.createAppointment, options)
-      .then(response => {
-        // TODO: Throw a custom error
-        if (response.status >= 400) throw new Error("createAppointment: Bad response from server")
-        return response.json()
-      })
+      .then(response => this.checkStatus(response))
       .then(createdAppointement => {
         this.checkErrorCode(createdAppointement)
         return createdAppointement
@@ -94,11 +86,7 @@ export default class SDK extends Configuration {
     }
 
     return fetch(this.url + this.routes.cancelAppointment, options)
-      .then(response => {
-        // TODO: Throw a custom error
-        if (response.status >= 400) throw new Error("cancelAppointment: Bad response from server")
-        return response.json()
-      })
+      .then(response => this.checkStatus(response))
       .then(deletedAppointement => {
         this.checkErrorCode(deletedAppointement)
         return deletedAppointement
