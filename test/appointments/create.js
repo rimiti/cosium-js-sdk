@@ -2,8 +2,7 @@ import test from 'ava'
 import sdk from '../../src/lib'
 import SDK from '../../src/class/sdk'
 import mock from 'fetch-mock'
-import {UnknownCategoryCode} from '../../src/class/exceptions'
-import {UnavailableSlot} from '../../src/class/exceptions'
+import {UnknownCategoryCode, UnavailableSlot, MissingMandatoryParameter} from '../../src/class/exceptions'
 
 let instance = {}
 
@@ -30,6 +29,36 @@ test('Create appointment', t => {
       }
   })
     .then((response) => t.deepEqual(response, {"errorCode": null, "bookingId": "1935472128"}))
+})
+
+test('Create appointment throws exception when missing mandatory request parameter', t => {
+  mock.restore()
+  mock.post(instance.url + instance.routes.createAppointment,
+    {
+        "errorCode": "MISSING_MANDATORY_PARAMETER",
+        "errorMessage": "Missing mandatory parameter : category",
+        "bookingId": 0
+    }
+  )
+
+  return instance.createAppointment({
+      "siteCode": "c1",
+      "description": "ma   description",
+      "qualification": "HEARING_AID",
+      "customer":
+        {
+          "firstname": "Jean",
+          "lastname": "Dupont",
+          "email": "jean.dupont@gmail.com"
+        }
+    })
+    .catch(e => {
+      t.is(e instanceof MissingMandatoryParameter, true)
+      t.is(e.name, `MissingMandatoryParameter`)
+      t.is(e.message, `Missing mandatoy parameter`)
+
+    })
+
 })
 
 test('Create appointment without a category not existing', t => {
