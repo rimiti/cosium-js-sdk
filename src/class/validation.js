@@ -63,7 +63,7 @@ export default class Validation {
    * @description Validate params mandatory attribute
    * @param params
    */
-  validateGetAvailableTimeslots(params) {
+  validateMandatoryGetAvailableTimeslots(params) {
     let errors = []
     if (!params.siteCode) errors.push('siteCode')
     if (!params.startDate) errors.push('startDate')
@@ -75,7 +75,7 @@ export default class Validation {
    * @description Validate params mandatory attribute
    * @param params
    */
-  validateCreateAppointment(params) {
+  validateMandatoryCreateAppointment(params) {
     let errors = []
     if (!params.siteCode) errors.push('siteCode')
     if (!params.date) errors.push('date')
@@ -91,7 +91,7 @@ export default class Validation {
    * @description Validate params mandatory attribute
    * @param params
    */
-  validateCancelAppointment(params) {
+  validateMandatoryCancelAppointment(params) {
     let errors = []
     if (!params.siteCode) errors.push('siteCode')
     if (!params.bookingId) errors.push('bookingId')
