@@ -83,6 +83,10 @@ export default class SDK extends Configuration {
         if (response.status >= 400) throw new Error("cancelAppointment: Bad response from server")
         return response.json()
       })
+      .then(deletedAppointement => {
+        this._checkErrorCode(deletedAppointement)
+        return deletedAppointement
+      })
   }
 
   /**
