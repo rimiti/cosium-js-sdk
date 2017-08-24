@@ -27,10 +27,10 @@ export default class SDK extends Configuration {
     return fetch(this.url + this.routes.availableTimeslots, options)
       .then(response => {
         if (response.status >= 400) throw new Error("getAvailableTimeslots: Bad response from server")
-        this._check_error_code(response.body)
+        this._checkErrorCode(response.body)
         return response.json()
       }).then(availabilities => {
-        this._check_error_code(availabilities)
+        this._checkErrorCode(availabilities)
         return availabilities
       })
   }
@@ -97,7 +97,12 @@ export default class SDK extends Configuration {
     // TODO: If format is not compliant, thrown a custom error
   }
 
-  _check_error_code(response) {
+  /**
+   * @description Check if there is an error in body
+   * @param response
+   * @private
+   */
+  _checkErrorCode(response) {
     if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter()
   }
 
