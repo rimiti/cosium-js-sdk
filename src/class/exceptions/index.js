@@ -1,4 +1,4 @@
-import AuthenticationBadRequest from './authentication/bad_request'
+import NotAuthorized from './authentication/not_authorized'
 import ConfigurationWrongCredentials from './configuration/wrong_credentials'
 import ConfigurationWrongFormat from './configuration/wrong_format'
 import MissingMandatoryParameter from './api/missing_mandatory_parameter'
@@ -12,7 +12,7 @@ import InvalidDatetimeFormat from './api/invalid_datetime_format'
 import BadRequest from './api/bad_request'
 
 export {
-  AuthenticationBadRequest,
+  NotAuthorized,
   ConfigurationWrongFormat,
   ConfigurationWrongCredentials,
   MissingMandatoryParameter,
