@@ -1,5 +1,5 @@
 import Configuration from './configuration'
-import {MissingMandatoryParameter} from './exceptions'
+import {MissingMandatoryParameter, WrongDatetimes} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 import moment from 'moment'
@@ -13,6 +13,7 @@ export default class SDK extends Configuration {
   }
 
   getAvailableTimeslots(params) {
+    this.daysBetweenTwoDates(params.startDate, params.endDate)
     const options = {
       method: 'POST',
       headers: this.headers,
@@ -81,8 +82,8 @@ export default class SDK extends Configuration {
       })
   }
 
-  _daysBetweenTwoDates(start, end) {
-    // TODO: Compare two dates, if there are more than 20 throw a custom error
+  daysBetweenTwoDates(start, end) {
+    if (moment(start).diff(moment(end), 'days') >= 20) throw new WrongDatetimes()
   }
 
   _datetimeFormat(datetime) {
@@ -90,7 +91,7 @@ export default class SDK extends Configuration {
   }
 
   _check_error_code(response) {
-    if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter
+    if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter()
   }
 
 }
