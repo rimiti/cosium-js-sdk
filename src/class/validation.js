@@ -9,7 +9,8 @@ import {
   BookingNotFound,
   InvalidDatetimeFormat,
   NotAuthorized,
-  BadRequest
+  BadRequest,
+  MissingParameter
 } from './exceptions'
 
 export default class Validation {
