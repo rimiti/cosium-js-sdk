@@ -10,6 +10,62 @@ Cosium Javascript SDK
 $ npm install cosium-js-sdk
 ```
 
+## Available methods
+
+**Getting available timeslots**
+
+```js
+import cosium from 'cosium-js-sdk'
+
+const params = {
+    siteCode: "c1",
+    startDate: "2017-09-23T12:00:00.000Z",
+    endDate: "2017-09-23T13:00:00.000Z"
+}
+
+cosium.getAvailableTimeslots(params).then((response) => {
+	console.log(response)
+})
+```
+
+**Create an appointement**
+
+```js
+import cosium from 'cosium-js-sdk'
+
+const params = {
+  "siteCode": "c1",
+  "description": "my description",
+    "qualification": "HEARING_AID",
+    "category": "consultation1",
+    "customer":
+      {
+        "firstname": "Jean",
+        "lastname": "Dupont",
+        "email": "jean.dupont@gmail.com"
+      }
+}
+
+cosium.createAppointment(params).then((response) => {
+	console.log(response)
+})
+```
+
+**Delete an appointement**
+
+```js
+import cosium from 'cosium-js-sdk'
+
+const params = {
+ 	"siteCode": "c1",
+  "bookingId": "20"
+}
+
+cosium.cancelAppointment(params).then((response) => {
+	console.log(response)
+})
+```
+
 ## Tests
 ```js
 // Run tests
