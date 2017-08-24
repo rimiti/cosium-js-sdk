@@ -58,4 +58,44 @@ export default class Validation {
     else if (response.status === 400) throw new BadRequest()
     else throw new UnknownError(response)
   }
+
+  /**
+   * @description Validate params mandatory attribute
+   * @param params
+   */
+  validateGetAvailableTimeslots(params) {
+    let errors = []
+    if (!params.siteCode) errors.push('siteCode')
+    if (!params.startDate) errors.push('startDate')
+    if (!params.endDate) errors.push('endDate')
+    if (errors.length) throw new MissingParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+  }
+
+  /**
+   * @description Validate params mandatory attribute
+   * @param params
+   */
+  validateCreateAppointment(params) {
+    let errors = []
+    if (!params.siteCode) errors.push('siteCode')
+    if (!params.date) errors.push('date')
+    if (!params.object) errors.push('object')
+    if (!params.category) errors.push('category')
+    if (!params.customer) errors.push('customer')
+    if (!params.customer && !params.customer.firstname) errors.push('customer.firstname')
+    if (!params.customer && !params.customer.lastname) errors.push('customer.lastname')
+    if (errors.length) throw new MissingParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+  }
+
+  /**
+   * @description Validate params mandatory attribute
+   * @param params
+   */
+  validateCancelAppointment(params) {
+    let errors = []
+    if (!params.siteCode) errors.push('siteCode')
+    if (!params.bookingId) errors.push('bookingId')
+    if (errors.length) throw new MissingParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+  }
+
 }
