@@ -1,13 +1,15 @@
 import {ConfigurationWrongFormat} from './exceptions'
 import Authentication from './authentication'
+import Validation from './validation'
 
-export default class Configuration {
+export default class Configuration extends Validation {
 
   /**
    * @description Auto-hydrate object from configuration
    * @param config
    */
   constructor(config) {
+    super()
     this._hydrate(config, this._itemsToHydrate())
   }
 
