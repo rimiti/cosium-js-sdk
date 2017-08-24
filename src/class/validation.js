@@ -29,7 +29,7 @@ export default class Validation {
    * @description Check datetime format
    * @param datetime
    */
-  checkDatetimeFormat(datetime) {
+  datetimeFormat(datetime) {
     if (!moment(datetime, moment.ISO_8601, true).isValid()) {
       throw new InvalidDatetimeFormat()
     }
@@ -39,7 +39,7 @@ export default class Validation {
    * @description Check if there is an error in body
    * @param response
    */
-  checkErrorCode(response) {
+  errorCode(response) {
     if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter(response.errorMessage)
     else if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode(response.errorMessage)
     else if (response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot(response.errorMessage)
@@ -52,7 +52,7 @@ export default class Validation {
    * @param response
    * @return {*}
    */
-  checkStatus(response) {
+  httpStatus(response) {
     if (response.status === 200) return response.json()
     else if (response.status === 401) throw new NotAuthorized()
     else if (response.status === 400) throw new BadRequest()
