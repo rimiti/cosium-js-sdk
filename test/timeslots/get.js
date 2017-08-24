@@ -13,6 +13,7 @@ test.before(t => {
 })
 
 test('Get available time slots', t => {
+  mock.restore()
   mock.post(instance.url + instance.routes.availableTimeslots,
     {
       "errorCode": null,
@@ -43,24 +44,24 @@ test('Get available time slots', t => {
 })
 
 
-// test('Get available time slots throws exception when missing mandatory request parameter', t => {
+test('Get available time slots throws exception when missing mandatory request parameter', t => {
+  mock.restore()
+  mock.post(instance.url + instance.routes.availableTimeslots,
+    {
+      "errorCode": "MISSING_MANDATORY_PARAMETER",
+      "errorMessage": "Missing mandatory parameter : startDate",
+      "availableTimeSlots": []
+    }
+  )
 
-//   mock.post(instance.url + instance.routes.availableTimeslots,
-//     {
-//       "errorCode": "MISSING_MANDATORY_PARAMETER",
-//       "errorMessage": "Missing mandatory parameter : startDate",
-//       "availableTimeSlots": []
-//     }
-//   )
+  return instance.getAvailableTimeslots({siteCode: "c1"})
+    .catch(e => {
+      t.is(e instanceof MissingMandatoryParameter, true)
+      t.is(e.name, `MissingMandatoryParameter`)
+      t.is(e.message, `Missing mandatoy parameter`)
 
-//   return instance.getAvailableTimeslots({siteCode: "c1"})
-//     .catch(e => {
-//       t.is(e instanceof MissingMandatoryParameter, true)
-//       t.is(e.name, `MissingMandatoryParameter`)
-//       t.is(e.message, `Missing request parameter`)
+    })
 
-//     })
-
-// })
+})
 
 
