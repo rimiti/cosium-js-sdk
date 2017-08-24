@@ -6,7 +6,8 @@ import {
   WrongDatetimeValues,
   UnknownCategoryCode,
   UnavailableSlot,
-  BookingNotFound
+  BookingNotFound,
+  InvalidDatetimeFormat
 } from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
@@ -22,13 +23,14 @@ export default class SDK extends Configuration {
 
   getAvailableTimeslots(params) {
     this.daysBetweenTwoDates(params.startDate, params.endDate)
+
     const options = {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "startDate": params.startDate,
-        "endDate": params.endDate
+        "startDate": this._checkDatetimeFormat(params.startDate),
+        "endDate": this._checkDatetimeFormat(params.endDate)
       })
     }
 
@@ -49,7 +51,7 @@ export default class SDK extends Configuration {
       headers: this.headers,
       body: JSON.stringify({
         "siteCode": params.siteCode,
-        "date": params.startDate, // TODO: Check datetime format with his own private method
+        "date": this._checkDatetimeFormat(params.startDate),
         "object": params.endDate,
         "category": params.category,
         "description": params.description,
@@ -108,8 +110,13 @@ export default class SDK extends Configuration {
     if (Math.abs(days) >= 20) throw new WrongDatetimes()
   }
 
-  _datetimeFormat(datetime) {
-    // TODO: If format is not compliant, thrown a custom error
+  /**
+   * @description Check datetime format
+   * @param datetime
+   * @private
+   */
+  _checkDatetimeFormat(datetime) {
+    if (!moment(datetime, 'YYYY-MM-DD HH:mm:ss', true).isValid()) throw new InvalidDatetimeFormat()
   }
 
   /**
