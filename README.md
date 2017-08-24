@@ -52,7 +52,7 @@ N.B: The difference between startDate and endDate should be at maximum 20 days
 
 <br/>
 
-* ***Create an appointement***
+* ***Create an appointment***
 
 ```js
 import cosium from 'cosium-js-sdk'
@@ -98,7 +98,7 @@ request parameter for calling the function:
 
 <br/>
 
-* ***Delete an appointement***
+* ***Delete an appointment***
 
 ```js
 import cosium from 'cosium-js-sdk'
