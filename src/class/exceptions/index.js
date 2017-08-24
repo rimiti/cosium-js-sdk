@@ -8,6 +8,7 @@ import UnknownCategoryCode from './api/unknown_category_code'
 import UnknownError from './api/unknow_error'
 import UnavailableSlot from './api/unavailable_slot'
 import BookingNotFound from './api/booking_not_found'
+import InvalidDatetimeFormat from './api/invalid_datetime_format'
 
 export {
   AuthenticationBadRequest,
@@ -18,7 +19,8 @@ export {
   WrongDatetimes,
   UnknownCategoryCode,
   UnavailableSlot,
-  UnknownError
+  UnknownError,
   UnavailableSlot,
+  InvalidDatetimeFormat,
   BookingNotFound
 }
