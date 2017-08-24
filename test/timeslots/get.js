@@ -12,42 +12,55 @@ test.before(t => {
   t.is(instance instanceof SDK, true)
 })
 
-// test('Get available time slots', t => {
+test('Get available time slots', t => {
+  mock.post(instance.url + instance.routes.availableTimeslots,
+    {
+      "errorCode": null,
+      "errorMessage": null,
+      "availableTimeSlots": [
+        {date: '2017-09-23T12:00:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']},
+        {date: '2017-09-23T12:30:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']}
+      ]
+    }
+  )
+
+
+  return instance.getAvailableTimeslots({
+    siteCode: "c1",
+    startDate: "2017-09-23T12:00:00.000Z",
+    endDate: "2017-09-23T13:00:00.000Z"
+  })
+    .then((response) => t.deepEqual(response, {
+      errorCode: null,
+      errorMessage: null,
+      availableTimeSlots: [
+        {date: '2017-09-23T12:00:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']},
+        {date: '2017-09-23T12:30:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']}
+      ]
+    })
+    )
+
+})
+
+
+// test('Get available time slots throws exception when missing mandatory request parameter', t => {
+
 //   mock.post(instance.url + instance.routes.availableTimeslots,
 //     {
-//       "errorCode": null,
-//       "errorMessage": null,
-//       "availableTimeSlots": [
-//         {date: '2017-09-23T12:00:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']},
-//         {date: '2017-09-23T12:30:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']}
-//       ]
+//       "errorCode": "MISSING_MANDATORY_PARAMETER",
+//       "errorMessage": "Missing mandatory parameter : startDate",
+//       "availableTimeSlots": []
 //     }
 //   )
 
+//   return instance.getAvailableTimeslots({siteCode: "c1"})
+//     .catch(e => {
+//       t.is(e instanceof MissingMandatoryParameter, true)
+//       t.is(e.name, `MissingMandatoryParameter`)
+//       t.is(e.message, `Missing request parameter`)
 
-//   return instance.getAvailableTimeslots({
-//     siteCode: "c1",
-//     startDate: "2017-09-23T12:00:00.000Z",
-//     endDate: "2017-09-23T13:00:00.000Z"
-//   })
-//     .then((response) => t.deepEqual(response, {
-//       errorCode: null,
-//       errorMessage: null,
-//       availableTimeSlots: [
-//         {date: '2017-09-23T12:00:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']},
-//         {date: '2017-09-23T12:30:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']}
-//       ]
-//     }))
+//     })
+
 // })
-
-
-test('Get available time slots throws exception when missing mandatory request parameter', t => {
-  return instance.getAvailableTimeslots({siteCode: "c1"})
-    .catch(e => {
-      t.is(e instanceof MissingMandatoryParameter, true)
-      t.is(e.name, ``)
-      t.is(e.message, ``)
-    })
-})
 
 
