@@ -5,7 +5,7 @@ export default class MissingMandatoryParameter extends Exception {
   constructor(message) {
     super()
     this.name = this.constructor.name
-    this.message = message || `Missing request parameter`
+    this.message = message || `Missing mandatoy parameter`
   }
 
 }
