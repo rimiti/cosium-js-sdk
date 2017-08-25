@@ -20,9 +20,12 @@ export default class Validation {
    * @param end
    */
   daysBetweenTwoDates(start, end) {
-    const days = moment(start).diff(moment(end), 'days')
-    if (days < 0) throw new WrongDatetimeValues()
-    if (Math.abs(days) >= 20) throw new WrongDatetimes()
+    return new Promise(resolve => {
+      const days = moment(start).diff(moment(end), 'days')
+      if (days < 0) throw new WrongDatetimeValues()
+      if (Math.abs(days) >= 20) throw new WrongDatetimes()
+      return resolve()
+    })
   }
 
   /**
@@ -30,9 +33,10 @@ export default class Validation {
    * @param datetime
    */
   datetimeFormat(datetime) {
-    if (!moment(datetime, moment.ISO_8601, true).isValid()) {
-      throw new InvalidDatetimeFormat()
-    }
+    return new Promise(resolve => {
+      if (moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
+      return resolve()
+    })
   }
 
   /**
