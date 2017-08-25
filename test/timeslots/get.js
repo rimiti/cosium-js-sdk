@@ -1,8 +1,8 @@
 import test from 'ava'
-import sdk from '../../src/lib'
+import sdk from '../../src/lib/index'
 import SDK from '../../src/class/sdk'
 import mock from 'fetch-mock'
-import {MissingMandatoryParameter} from '../../src/class/exceptions'
+import {MissingMandatoryParameter} from '../../src/class/exceptions/index'
 
 let instance = {}
 
@@ -12,7 +12,7 @@ test.before(t => {
   t.is(instance instanceof SDK, true)
 })
 
-test.afterEach(t => mock.restore())
+test.afterEach(() => mock.restore())
 
 test('Get available timeslots', t => {
   mock.post(instance.url + instance.routes.availableTimeslots, {
