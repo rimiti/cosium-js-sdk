@@ -95,7 +95,7 @@ test('Create appointment', t => {
         return instance.createAppointment({
           "siteCode": "c1",
           "date": "2017-07-29T13:15:00.000Z",
-          "object": "Sujet",
+          "object": "subject",
           "category": "consultation1",
           "customer": {
             "firstname": "Jean",

@@ -2,7 +2,7 @@ import test from 'ava'
 import sdk from '../../src/lib/index'
 import SDK from '../../src/class/sdk'
 import mock from 'fetch-mock'
-import {MissingMandatoryParameter} from '../../src/class/exceptions/index'
+import {MissingMandatoryParameter, InvalidDatetimeFormat} from '../../src/class/exceptions/index'
 
 let instance = {}
 
@@ -26,8 +26,8 @@ test('Get available timeslots', t => {
 
   return instance.getAvailableTimeslots({
     siteCode: "c1",
-    startDate: "2017-09-23T12:00:00.000Z",
-    endDate: "2017-09-23T13:00:00.000Z"
+    startDate: "2017-08-24T15:30:25+02:00",
+    endDate: "2017-08-24T15:30:25+02:00"
   })
     .then(response => t.deepEqual(response, {
       errorCode: null,
@@ -48,8 +48,24 @@ test('Get available time slots throws exception when missing mandatory parameter
 
   return instance.getAvailableTimeslots({siteCode: "c1"})
     .catch(e => {
-      t.is(e instanceof MissingMandatoryParameter, true)
-      t.is(e.name, `MissingMandatoryParameter`)
-      t.is(e.message, `Parameter(s) ["startDate","endDate"] missing`)
+      t.is(e instanceof InvalidDatetimeFormat, true)
+      t.is(e.name, `InvalidDatetimeFormat`)
+      t.is(e.message, `Invalid datetime format (ISO_8601 format required)`)
     })
 })
+
+
+// test('Get available time slots throws exception when missing mandatory parameter', t => {
+//   mock.post(instance.url + instance.routes.availableTimeslots, {
+//     "errorCode": "MISSING_MANDATORY_PARAMETER",
+//     "errorMessage": "Missing mandatory parameter : startDate",
+//     "availableTimeSlots": []
+//   })
+//
+//   return instance.getAvailableTimeslots({siteCode: "c1"})
+//     .catch(e => {
+//       t.is(e instanceof MissingMandatoryParameter, true)
+//       t.is(e.name, `MissingMandatoryParameter`)
+//       t.is(e.message, `Parameter(s) ["startDate","endDate"] missing`)
+//     })
+// })
