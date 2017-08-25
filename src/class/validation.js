@@ -36,7 +36,7 @@ export default class Validation {
    */
   datetimeFormat(datetime) {
     return new Promise(resolve => {
-      if (moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
+      if (!moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
       return resolve()
     })
   }
