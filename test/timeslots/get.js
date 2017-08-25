@@ -2,7 +2,7 @@ import test from 'ava'
 import sdk from '../../src/lib'
 import SDK from '../../src/class/sdk'
 import mock from 'fetch-mock'
-import {MissingMandatoryParameter, InvalidDatetimeFormat} from '../../src/class/exceptions'
+import {MissingMandatoryParameter} from '../../src/class/exceptions'
 
 let instance = {}
 
