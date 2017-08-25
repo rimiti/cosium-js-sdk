@@ -10,7 +10,6 @@ import UnavailableSlot from './api/unavailable_slot'
 import BookingNotFound from './api/booking_not_found'
 import InvalidDatetimeFormat from './api/invalid_datetime_format'
 import BadRequest from './api/bad_request'
-import MissingParameter from './configuration/missing_parameter'
 
 export {
   NotAuthorized,
@@ -24,6 +23,5 @@ export {
   UnknownError,
   InvalidDatetimeFormat,
   BookingNotFound,
-  BadRequest,
-  MissingParameter
+  BadRequest
 }
