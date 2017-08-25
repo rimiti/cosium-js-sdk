@@ -14,7 +14,7 @@ export default class SDK extends Configuration {
   /**
    * @description Get available timeslots between two dates
    * @param params
-   * @return {*|Promise<any>|Promise.<TResult>}
+   * @return {*|Promise<Promise>|Promise.<TResult>}
    */
   getAvailableTimeslots(params) {
     const options = {
@@ -28,6 +28,9 @@ export default class SDK extends Configuration {
     }
 
     return this.validateMandatoryGetAvailableTimeslots(params)
+      .then(this.daysBetweenTwoDates(params.startDate, params.endDate))
+      // .then(this.datetimeFormat(params.startDate))
+      // .then(this.datetimeFormat(params.endDate))
       .then(() => fetch(this.url + this.routes.availableTimeslots, options))
       .then(response => this.httpStatus(response))
       .then(response => this.errorCode(response))
@@ -36,7 +39,7 @@ export default class SDK extends Configuration {
   /**
    * @description Create appointment
    * @param params
-   * @return {*|Promise<any>|Promise.<TResult>}
+   * @return {*|Promise<Promise>|Promise.<TResult>}
    */
   createAppointment(params) {
     const options = {
@@ -59,6 +62,7 @@ export default class SDK extends Configuration {
     }
 
     return this.validateMandatoryCreateAppointment(params)
+      // .then(this.datetimeFormat(params.date))
       .then(() => fetch(this.url + this.routes.createAppointment, options))
       .then(response => this.httpStatus(response))
       .then(response => this.errorCode(response))
@@ -67,7 +71,7 @@ export default class SDK extends Configuration {
   /**
    * @description Cancel appointment
    * @param params
-   * @return {*|Promise<any>|Promise.<TResult>}
+   * @return {*|Promise<Promise>|Promise.<TResult>}
    */
   cancelAppointment(params) {
     const options = {
