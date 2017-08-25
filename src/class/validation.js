@@ -9,8 +9,7 @@ import {
   BookingNotFound,
   InvalidDatetimeFormat,
   NotAuthorized,
-  BadRequest,
-  MissingParameter
+  BadRequest
 } from './exceptions'
 
 export default class Validation {
@@ -41,11 +40,14 @@ export default class Validation {
    * @param response
    */
   errorCode(response) {
-    if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter(response.errorMessage)
-    else if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode(response.errorMessage)
-    else if (response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot(response.errorMessage)
-    else if (response.errorCode === 'BOOKING_NOT_FOUND') throw new BookingNotFound(response.errorMessage)
-    else if (response.errorCode !== null) throw new UnknownError(response.errorMessage)
+    return new Promise(resolve => {
+      if (response.errorCode === 'MISSING_MANDATORY_PARAMETER') throw new MissingMandatoryParameter(response.errorMessage)
+      else if (response.errorCode === 'UNKNOWN_CATEGORY_CODE') throw new UnknownCategoryCode(response.errorMessage)
+      else if (response.errorCode === 'UNAVAILABLE_SLOT') throw new UnavailableSlot(response.errorMessage)
+      else if (response.errorCode === 'BOOKING_NOT_FOUND') throw new BookingNotFound(response.errorMessage)
+      else if (response.errorCode !== null) throw new UnknownError(response.errorMessage)
+      return resolve(response)
+    })
   }
 
   /**
@@ -54,10 +56,12 @@ export default class Validation {
    * @return {*}
    */
   httpStatus(response) {
-    if (response.status === 200) return response.json()
-    else if (response.status === 401) throw new NotAuthorized()
-    else if (response.status === 400) throw new BadRequest()
-    else throw new UnknownError(response)
+    return new Promise(resolve => {
+      if (response.status === 200) return resolve(response.json())
+      else if (response.status === 401) throw new NotAuthorized()
+      else if (response.status === 400) throw new BadRequest()
+      else throw new UnknownError(response)
+    })
   }
 
   /**
@@ -65,11 +69,14 @@ export default class Validation {
    * @param params
    */
   validateMandatoryGetAvailableTimeslots(params) {
-    let errors = []
-    if (!params.siteCode) errors.push('siteCode')
-    if (!params.startDate) errors.push('startDate')
-    if (!params.endDate) errors.push('endDate')
-    if (errors.length) throw new MissingParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+    return new Promise((resolve) => {
+      let errors = []
+      if (!params.siteCode) errors.push('siteCode')
+      if (!params.startDate) errors.push('startDate')
+      if (!params.endDate) errors.push('endDate')
+      if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+      return resolve(true)
+    })
   }
 
   /**
@@ -77,15 +84,18 @@ export default class Validation {
    * @param params
    */
   validateMandatoryCreateAppointment(params) {
-    let errors = []
-    if (!params.siteCode) errors.push('siteCode')
-    if (!params.date) errors.push('date')
-    if (!params.object) errors.push('object')
-    if (!params.category) errors.push('category')
-    if (!params.customer) errors.push('customer')
-    if (!params.customer && !params.customer.firstname) errors.push('customer.firstname')
-    if (!params.customer && !params.customer.lastname) errors.push('customer.lastname')
-    if (errors.length) throw new MissingParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+    return new Promise((resolve) => {
+      let errors = []
+      if (!params.siteCode) errors.push('siteCode')
+      if (!params.date) errors.push('date')
+      if (!params.object) errors.push('object')
+      if (!params.category) errors.push('category')
+      if (!params.customer) errors.push('customer')
+      if (!params.customer && !params.customer.firstname) errors.push('customer.firstname')
+      if (!params.customer && !params.customer.lastname) errors.push('customer.lastname')
+      if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+      return resolve(true)
+    })
   }
 
   /**
@@ -93,10 +103,13 @@ export default class Validation {
    * @param params
    */
   validateMandatoryCancelAppointment(params) {
-    let errors = []
-    if (!params.siteCode) errors.push('siteCode')
-    if (!params.bookingId) errors.push('bookingId')
-    if (errors.length) throw new MissingParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+    return new Promise((resolve) => {
+      let errors = []
+      if (!params.siteCode) errors.push('siteCode')
+      if (!params.bookingId) errors.push('bookingId')
+      if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
+      return resolve(true)
+    })
   }
 
 }
