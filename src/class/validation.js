@@ -18,6 +18,7 @@ export default class Validation {
    * @description Check number of days between two dates
    * @param start
    * @param end
+   * @return {Promise}
    */
   daysBetweenTwoDates(start, end) {
     return new Promise(resolve => {
@@ -31,6 +32,7 @@ export default class Validation {
   /**
    * @description Check datetime format
    * @param datetime
+   * @return {Promise}
    */
   datetimeFormat(datetime) {
     return new Promise(resolve => {
@@ -42,6 +44,7 @@ export default class Validation {
   /**
    * @description Check if there is an error in body
    * @param response
+   * @return {Promise}
    */
   errorCode(response) {
     return new Promise(resolve => {
@@ -57,7 +60,7 @@ export default class Validation {
   /**
    * @description Check htt code status
    * @param response
-   * @return {*}
+   * @return {Promise}
    */
   httpStatus(response) {
     return new Promise(resolve => {
@@ -71,6 +74,7 @@ export default class Validation {
   /**
    * @description Validate params mandatory attribute
    * @param params
+   * @return {Promise}
    */
   validateMandatoryGetAvailableTimeslots(params) {
     return new Promise((resolve) => {
@@ -86,6 +90,7 @@ export default class Validation {
   /**
    * @description Validate params mandatory attribute
    * @param params
+   * @return {Promise}
    */
   validateMandatoryCreateAppointment(params) {
     return new Promise((resolve) => {
@@ -105,6 +110,7 @@ export default class Validation {
   /**
    * @description Validate params mandatory attribute
    * @param params
+   * @return {Promise}
    */
   validateMandatoryCancelAppointment(params) {
     return new Promise((resolve) => {
