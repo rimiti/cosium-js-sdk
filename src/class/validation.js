@@ -32,13 +32,9 @@ export default class Validation {
   /**
    * @description Check datetime format
    * @param datetime
-   * @return {Promise}
    */
   datetimeFormat(datetime) {
-    // return new Promise(resolve => {
-      if (!moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
-      // return resolve()
-    // })
+    if (!moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
   }
 
   /**
@@ -84,6 +80,7 @@ export default class Validation {
       if (!params.endDate) errors.push('endDate')
       if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
       this.datetimeFormat(params.startDate)
+      this.datetimeFormat(params.endDate)
       return resolve(true)
     })
   }
@@ -104,7 +101,7 @@ export default class Validation {
       if (!params.customer && !params.customer.firstname) errors.push('customer.firstname')
       if (!params.customer && !params.customer.lastname) errors.push('customer.lastname')
       if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
-      // this.datetimeFormat(params.date)
+      this.datetimeFormat(params.date)
       return resolve(true)
     })
   }
