@@ -78,7 +78,7 @@ test('Get available timeslots', t => {
 
       return instance.getAvailableTimeslots({
         siteCode: "c1",
-        startDate: "2017-08-24",
+        startDate: "2017-08-32",
         endDate: "2017-08-24"
       })
         .catch(e => {
