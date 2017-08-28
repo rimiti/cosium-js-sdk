@@ -48,9 +48,9 @@ test('Get available time slots throws exception when missing mandatory parameter
 
   return instance.getAvailableTimeslots({siteCode: "c1"})
     .catch(e => {
-      t.is(e instanceof InvalidDatetimeFormat, true)
-      t.is(e.name, `InvalidDatetimeFormat`)
-      t.is(e.message, `Invalid datetime format (ISO_8601 format required)`)
+      t.is(e instanceof MissingMandatoryParameter, true)
+      t.is(e.name, `MissingMandatoryParameter`)
+      t.is(e.message, `Parameter(s) ["startDate","endDate"] missing`)
     })
 })
 
