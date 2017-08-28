@@ -1,5 +1,4 @@
 import Configuration from './configuration'
-import {NotAuthorized, BadRequest, UnknownError} from './exceptions'
 import 'isomorphic-fetch'
 import Es6Promise from 'es6-promise'
 
