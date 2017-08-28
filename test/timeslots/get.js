@@ -7,7 +7,8 @@ import {
   InvalidDatetimeFormat,
   WrongDatetimeValues,
   WrongDatetimes,
-  NotAuthorized
+  NotAuthorized,
+  BadRequest
 } from '../../src/class/exceptions/index'
 
 let instance = {}
@@ -140,11 +141,24 @@ test('Get available timeslots', t => {
         endDate: "2017-10-24T15:30:25+02:00"
       })
         .catch(e => {
-          console.log(`====>`)
-          console.log(e)
           t.is(e instanceof NotAuthorized, true)
           t.is(e.name, `NotAuthorized`)
           t.is(e.message, `Not authorized`)
+        })
+    })
+    .then(() => { // Return 400 bad request
+      mock.restore()
+      mock.post(instance.url + instance.routes.availableTimeslots, 400)
+
+      return instance.getAvailableTimeslots({
+        siteCode: "c1",
+        startDate: "2017-10-24T15:30:25+02:00",
+        endDate: "2017-10-24T15:30:25+02:00"
+      })
+        .catch(e => {
+          t.is(e instanceof BadRequest, true)
+          t.is(e.name, `BadRequest`)
+          t.is(e.message, `Bad request`)
         })
     })
 })
