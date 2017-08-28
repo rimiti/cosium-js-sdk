@@ -40,7 +40,6 @@ export default class Validation {
       if (response.status === 200) return resolve(response.json())
       else if (response.status === 401) throw new NotAuthorized()
       else if (response.status === 400) throw new BadRequest()
-      else throw new UnknownError(response)
     })
   }
 
