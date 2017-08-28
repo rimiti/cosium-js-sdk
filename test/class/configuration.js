@@ -1,7 +1,6 @@
 import test from 'ava'
 import sdk from '../../src/lib'
 import {ConfigurationWrongCredentials, ConfigurationWrongFormat} from '../../src/class/exceptions'
-import Configuration from '../../src/class/configuration'
 
 test('Set empty username and password', t => {
   const err = t.throws(() => sdk.create(), ConfigurationWrongCredentials)
