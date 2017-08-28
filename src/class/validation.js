@@ -72,7 +72,7 @@ export default class Validation {
    * @param params
    * @return {Promise}
    */
-  validateMandatoryGetAvailableTimeslots(params) {
+  validateGetAvailableTimeslots(params) {
     return new Promise((resolve) => {
       let errors = []
       if (!params.siteCode) errors.push('siteCode')
@@ -90,7 +90,7 @@ export default class Validation {
    * @param params
    * @return {Promise}
    */
-  validateMandatoryCreateAppointment(params) {
+  validateCreateAppointment(params) {
     return new Promise((resolve) => {
       let errors = []
       if (!params.siteCode) errors.push('siteCode')
@@ -111,7 +111,7 @@ export default class Validation {
    * @param params
    * @return {Promise}
    */
-  validateMandatoryCancelAppointment(params) {
+  validateCancelAppointment(params) {
     return new Promise((resolve) => {
       let errors = []
       if (!params.siteCode) errors.push('siteCode')
