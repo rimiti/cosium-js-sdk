@@ -6,7 +6,8 @@ import {
   MissingMandatoryParameter,
   InvalidDatetimeFormat,
   WrongDatetimeValues,
-  WrongDatetimes
+  WrongDatetimes,
+  NotAuthorized
 } from '../../src/class/exceptions/index'
 
 let instance = {}
@@ -105,7 +106,6 @@ test('Get available timeslots', t => {
           t.is(e instanceof WrongDatetimes, true)
           t.is(e.name, `WrongDatetimes`)
           t.is(e.message, `You cannot have more than 20 days between two dates`)
-          t.is(true, true)
         })
     })
     .then(() => { // Get available timeslots with start datetime greater than end datetime
@@ -128,7 +128,23 @@ test('Get available timeslots', t => {
           t.is(e instanceof WrongDatetimeValues, true)
           t.is(e.name, `WrongDatetimeValues`)
           t.is(e.message, `Start datetime is greater than end datetime`)
-          t.is(true, true)
+        })
+    })
+    .then(() => { // Get available timeslots without being authenticated
+      mock.restore()
+      mock.post(instance.url + instance.routes.availableTimeslots, 401)
+
+      return instance.getAvailableTimeslots({
+        siteCode: "c1",
+        startDate: "2017-10-24T15:30:25+02:00",
+        endDate: "2017-10-24T15:30:25+02:00"
+      })
+        .catch(e => {
+          console.log(`====>`)
+          console.log(e)
+          t.is(e instanceof NotAuthorized, true)
+          t.is(e.name, `NotAuthorized`)
+          t.is(e.message, `Not authorized`)
         })
     })
 })
