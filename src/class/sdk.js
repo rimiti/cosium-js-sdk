@@ -28,7 +28,6 @@ export default class SDK extends Configuration {
     }
 
     return this.validateGetAvailableTimeslots(params)
-      .then(this.daysBetweenTwoDates(params.startDate, params.endDate))
       .then(() => fetch(this.url + this.routes.availableTimeslots, options))
       .then(response => this.httpStatus(response))
       .then(response => this.errorCode(response))
