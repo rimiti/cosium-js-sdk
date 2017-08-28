@@ -2,7 +2,12 @@ import test from 'ava'
 import sdk from '../../src/lib/index'
 import SDK from '../../src/class/sdk'
 import mock from 'fetch-mock'
-import {MissingMandatoryParameter, InvalidDatetimeFormat} from '../../src/class/exceptions/index'
+import {
+  MissingMandatoryParameter,
+  InvalidDatetimeFormat,
+  WrongDatetimeValues,
+  WrongDatetimes
+} from '../../src/class/exceptions/index'
 
 let instance = {}
 
@@ -16,6 +21,7 @@ test.afterEach(() => mock.restore())
 
 test('Get available timeslots', t => {
   return Promise.resolve(resolve => {
+    mock.restore()
     mock.post(instance.url + instance.routes.availableTimeslots, {
       "errorCode": null,
       "errorMessage": null,
@@ -43,6 +49,7 @@ test('Get available timeslots', t => {
       })
   })
     .then(() => { // Get available time slots throws exception when missing mandatory parameter
+      mock.restore()
       mock.post(instance.url + instance.routes.availableTimeslots, {
         "errorCode": "MISSING_MANDATORY_PARAMETER",
         "errorMessage": "Missing mandatory parameter : startDate",
@@ -56,7 +63,8 @@ test('Get available timeslots', t => {
           t.is(e.message, `Parameter(s) ["startDate","endDate"] missing`)
         })
     })
-    .then(() => {
+    .then(() => { // Get available timeslots with bad datetime format
+      mock.restore()
       mock.post(instance.url + instance.routes.availableTimeslots, {
         "errorCode": null,
         "errorMessage": null,
@@ -75,6 +83,52 @@ test('Get available timeslots', t => {
           t.is(e instanceof InvalidDatetimeFormat, true)
           t.is(e.name, `InvalidDatetimeFormat`)
           t.is(e.message, `Invalid datetime format (ISO_8601 format required)`)
+        })
+    })
+    .then(() => { // Get available timeslots with more than 20 interval days
+      mock.restore()
+      mock.post(instance.url + instance.routes.availableTimeslots, {
+        "errorCode": null,
+        "errorMessage": null,
+        "availableTimeSlots": [
+          {date: '2017-09-23T12:00:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']},
+          {date: '2017-09-23T12:30:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']}
+        ]
+      })
+
+      return instance.getAvailableTimeslots({
+        siteCode: "c1",
+        startDate: "2017-08-24T15:30:25+02:00",
+        endDate: "2017-10-24T15:30:25+02:00"
+      })
+        .catch(e => {
+          t.is(e instanceof WrongDatetimes, true)
+          t.is(e.name, `WrongDatetimes`)
+          t.is(e.message, `You cannot have more than 20 days between two dates`)
+          t.is(true, true)
+        })
+    })
+    .then(() => { // Get available timeslots with start datetime greater than end datetime
+      mock.restore()
+      mock.post(instance.url + instance.routes.availableTimeslots, {
+        "errorCode": null,
+        "errorMessage": null,
+        "availableTimeSlots": [
+          {date: '2017-09-23T12:00:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']},
+          {date: '2017-09-23T12:30:00.000+0000', qualifications: ['CONTACT_LENS', 'OPTIC', 'HEARING_AID']}
+        ]
+      })
+
+      return instance.getAvailableTimeslots({
+        siteCode: "c1",
+        startDate: "2017-10-24T15:30:25+02:00",
+        endDate: "2017-08-24T15:30:25+02:00"
+      })
+        .catch(e => {
+          t.is(e instanceof WrongDatetimeValues, true)
+          t.is(e.name, `WrongDatetimeValues`)
+          t.is(e.message, `Start datetime is greater than end datetime`)
+          t.is(true, true)
         })
     })
 })
