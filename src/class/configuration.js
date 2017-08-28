@@ -1,13 +1,15 @@
 import {ConfigurationWrongFormat} from './exceptions'
 import Authentication from './authentication'
+import Validation from './validation'
 
-export default class Configuration {
+export default class Configuration extends Validation {
 
   /**
    * @description Auto-hydrate object from configuration
    * @param config
    */
   constructor(config) {
+    super()
     this._hydrate(config, this._itemsToHydrate())
   }
 
@@ -28,6 +30,34 @@ export default class Configuration {
     this._credentials = new Authentication(value)
   }
 
+  get url() {
+    return this._url
+  }
+
+  set url(value) {
+    this._url = value
+  }
+
+  get routes() {
+    return this._routes
+  }
+
+  set routes(value) {
+    this._routes = value
+  }
+
+  /**
+   * @description Get headers pre formatted
+   * @returns {{Authorization: ({header}|*), Accept: string, Content-Type: string}}
+   */
+  get headers() {
+    return {
+      'Authorization': this._credentials.getAuthentication(),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }
+
   /**
    * @description Hydrate object from configuration settings
    * @param obj
@@ -35,7 +65,6 @@ export default class Configuration {
    * @private
    */
   _hydrate(obj, attributes) {
-    if (!obj) return
     for (let item of attributes) {
       this[item] = (obj[item]) ? obj[item] : ''
     }
@@ -43,10 +72,10 @@ export default class Configuration {
 
   /**
    * @description Return array with items names to hydrate
-   * @return {[string,string]}
+   * @returns {[string,string,string,string]}
    * @private
    */
   _itemsToHydrate() {
-    return ['format', 'credentials']
+    return ['format', 'credentials', 'url', 'routes']
   }
 }

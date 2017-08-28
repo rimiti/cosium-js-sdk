@@ -26,7 +26,7 @@ export default class Authentication {
 
   getAuthentication() {
     const base64 = new Buffer(`${this.username}:${this.password}`).toString('base64')
-    return {header: {Authorization: `Basic ${base64}`}}
+    return `Basic ${base64}`
   }
 
   _checkConfiguration() {
