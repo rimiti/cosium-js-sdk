@@ -65,7 +65,6 @@ export default class Configuration extends Validation {
    * @private
    */
   _hydrate(obj, attributes) {
-    if (!obj) return
     for (let item of attributes) {
       this[item] = (obj[item]) ? obj[item] : ''
     }
