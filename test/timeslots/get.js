@@ -8,7 +8,8 @@ import {
   WrongDatetimeValues,
   WrongDatetimes,
   NotAuthorized,
-  BadRequest
+  BadRequest,
+  UnknownError
 } from '../../src/class/exceptions/index'
 
 let instance = {}
@@ -50,6 +51,23 @@ test('Get available timeslots', t => {
         return resolve()
       })
   })
+    .then(() => { // Get available time slots throws exception when missing mandatory parameter
+      mock.restore()
+      mock.post(instance.url + instance.routes.availableTimeslots, {
+        "errorCode": "TEST_ERROR_CODE",
+        "errorMessage": "Test error",
+        "availableTimeSlots": []
+      })
+
+      return instance.getAvailableTimeslots({siteCode: "c1",
+        startDate: "2017-08-24T15:30:25+02:00",
+        endDate: "2017-08-24T15:30:25+02:00"})
+        .catch(e => {
+          t.is(e instanceof UnknownError, true)
+          t.is(e.name, `UnknownError`)
+          t.is(e.message, `Test error`)
+        })
+    })
     .then(() => { // Get available time slots throws exception when missing mandatory parameter
       mock.restore()
       mock.post(instance.url + instance.routes.availableTimeslots, {
