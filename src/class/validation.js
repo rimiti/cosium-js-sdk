@@ -15,29 +15,6 @@ import {
 export default class Validation {
 
   /**
-   * @description Check number of days between two dates
-   * @param start
-   * @param end
-   * @return {Promise}
-   */
-  daysBetweenTwoDates(start, end) {
-    return new Promise(resolve => {
-      const days = moment(start).diff(moment(end), 'days')
-      if (days < 0) throw new WrongDatetimeValues()
-      if (Math.abs(days) >= 20) throw new WrongDatetimes()
-      return resolve()
-    })
-  }
-
-  /**
-   * @description Check datetime format
-   * @param datetime
-   */
-  datetimeFormat(datetime) {
-    if (!moment(datetime, moment.ISO_8601, true).isValid()) throw new InvalidDatetimeFormat()
-  }
-
-  /**
    * @description Check if there is an error in body
    * @param response
    * @return {Promise}
@@ -79,8 +56,12 @@ export default class Validation {
       if (!params.startDate) errors.push('startDate')
       if (!params.endDate) errors.push('endDate')
       if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
-      this.datetimeFormat(params.startDate)
-      this.datetimeFormat(params.endDate)
+      if (!this._datetimeFormat(params.startDate)) throw new InvalidDatetimeFormat()
+      if (!this._datetimeFormat(params.endDate)) throw new InvalidDatetimeFormat()
+
+      const days = this._daysBetweenTwoDates(params.startDate, params.endDate)
+      if (days > 20) throw new WrongDatetimes()
+      if (days < 0) throw new WrongDatetimeValues()
       return resolve(true)
     })
   }
@@ -101,7 +82,7 @@ export default class Validation {
       if (!params.customer && !params.customer.firstname) errors.push('customer.firstname')
       if (!params.customer && !params.customer.lastname) errors.push('customer.lastname')
       if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
-      this.datetimeFormat(params.date)
+      if (!this._datetimeFormat(params.date)) throw new InvalidDatetimeFormat()
       return resolve(true)
     })
   }
@@ -119,6 +100,27 @@ export default class Validation {
       if (errors.length) throw new MissingMandatoryParameter(`Parameter(s) ${JSON.stringify(errors)} missing`)
       return resolve(true)
     })
+  }
+
+  /**
+   * @description Check number of days between two dates
+   * @param start
+   * @param end
+   * @return {number}
+   * @private
+   */
+  _daysBetweenTwoDates(start, end) {
+    return moment(end).diff(moment(start), 'days')
+  }
+
+  /**
+   * @description Check datetime format
+   * @param datetime
+   * @return {boolean}
+   * @private
+   */
+  _datetimeFormat(datetime) {
+    return moment(datetime, moment.ISO_8601, true).isValid()
   }
 
 }
