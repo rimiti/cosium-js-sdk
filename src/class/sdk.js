@@ -27,10 +27,8 @@ export default class SDK extends Configuration {
       })
     }
 
-    return this.validateMandatoryGetAvailableTimeslots(params)
+    return this.validateGetAvailableTimeslots(params)
       .then(this.daysBetweenTwoDates(params.startDate, params.endDate))
-      // .then(this.datetimeFormat(params.startDate))
-      // .then(this.datetimeFormat(params.endDate))
       .then(() => fetch(this.url + this.routes.availableTimeslots, options))
       .then(response => this.httpStatus(response))
       .then(response => this.errorCode(response))
@@ -61,8 +59,7 @@ export default class SDK extends Configuration {
       })
     }
 
-    return this.validateMandatoryCreateAppointment(params)
-      // .then(this.datetimeFormat(params.date))
+    return this.validateCreateAppointment(params)
       .then(() => fetch(this.url + this.routes.createAppointment, options))
       .then(response => this.httpStatus(response))
       .then(response => this.errorCode(response))
@@ -83,7 +80,7 @@ export default class SDK extends Configuration {
       })
     }
 
-    return this.validateMandatoryCancelAppointment(params)
+    return this.validateCancelAppointment(params)
       .then(() => fetch(this.url + this.routes.cancelAppointment, options))
       .then(response => this.httpStatus(response))
       .then(response => this.errorCode(response))
