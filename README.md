@@ -18,9 +18,9 @@ $ npm install cosium-js-sdk
 import cosium from 'cosium-js-sdk'
 
 const params = {
-    siteCode: "c1",
-    startDate: "2017-09-23T12:00:00.000Z",
-    endDate: "2017-09-23T13:00:00.000Z"
+  siteCode: "c1",
+  startDate: "2017-09-23T12:00:00.000Z",
+  endDate: "2017-09-23T13:00:00.000Z"
 }
 
 cosium.getAvailableTimeslots(params).then((response) => {
@@ -59,15 +59,18 @@ import cosium from 'cosium-js-sdk'
 
 const params = {
   "siteCode": "c1",
+  "date"
   "description": "my description",
-    "qualification": "HEARING_AID",
-    "category": "consultation1",
-    "customer":
-      {
-        "firstname": "Jean",
-        "lastname": "Dupont",
-        "email": "jean.dupont@gmail.com"
-      }
+  "object": "appointement subject",
+  "qualification": "HEARING_AID",
+  "category": "consultation1",
+  "date": "2017-08-24T15:30:25+02:00",
+  "customer":
+  {
+    "firstname": "Jean",
+    "lastname": "Dupont",
+    "email": "jean.dupont@gmail.com"
+  }
 }
 
 cosium.createAppointment(params).then((response) => {
