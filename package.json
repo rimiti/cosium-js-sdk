@@ -1,9 +1,9 @@
 {
   "name": "cosium-js-sdk",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Cosium Javascript SDK",
   "license": "MIT",
-  "main": "dist/lib/sdk.js",
+  "main": "dist/lib/index.js",
   "scripts": {
     "prepare": "gulp",
     "test": "nyc ava"
