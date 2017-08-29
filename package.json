@@ -1,6 +1,6 @@
 {
   "name": "cosium-js-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cosium Javascript SDK",
   "license": "MIT",
   "main": "dist/lib/sdk.js",
