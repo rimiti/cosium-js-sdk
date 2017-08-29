@@ -59,7 +59,6 @@ import cosium from 'cosium-js-sdk'
 
 const params = {
   "siteCode": "c1",
-  "date"
   "description": "my description",
   "object": "appointement subject",
   "qualification": "HEARING_AID",
