@@ -1,6 +1,6 @@
 import test from 'ava'
-import sdk from '../../src/lib/index'
-import SDK from '../../src/class/sdk'
+import * as sdk from '../../src/lib'
+import SDK from '../../src/class'
 import mock from 'fetch-mock'
 import {
   MissingMandatoryParameter,
@@ -10,7 +10,7 @@ import {
   NotAuthorized,
   BadRequest,
   UnknownError
-} from '../../src/class/exceptions/index'
+} from '../../src/class/exceptions'
 
 let instance = {}
 

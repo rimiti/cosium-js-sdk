@@ -1,5 +1,5 @@
 import test from 'ava'
-import sdk from '../../src/lib'
+import * as sdk from '../../src/lib'
 import {ConfigurationWrongCredentials, ConfigurationWrongFormat} from '../../src/class/exceptions'
 
 test('Set empty username and password', t => {

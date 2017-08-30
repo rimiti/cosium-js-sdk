@@ -1,6 +1,7 @@
-import sdk from '../class'
+import SDK from '../class'
+import jsonOverride from 'json-override'
 
-sdk.configure({
+let configuration = {
   "url": "",
   "routes": {
     "availableTimeslots": "/api/public/online-booking/query",
@@ -12,6 +13,20 @@ sdk.configure({
     "username": "",
     "password": ""
   }
-})
+}
 
-export default sdk
+/**
+ * @description Override default configuration
+ * @param config
+ */
+export function configure(config) {
+  configuration = jsonOverride(configuration, config)
+}
+
+/**
+ * @description Instantiate SDK class
+ * @returns {SDK}
+ */
+export function create() {
+  return new SDK(configuration)
+}
