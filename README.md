@@ -15,7 +15,10 @@ $ npm install cosium-js-sdk
 * ***Getting available timeslots***
 
 ```js
-import * as cosium from 'cosium-js-sdk'
+import * as sdk from 'cosium-js-sdk'
+
+sdk.configure({url: "https://www.example.com", credentials: {username: "username", password: "password"}})
+const cosium = sdk.create()
 
 const params = {
   siteCode: "c1",
@@ -55,7 +58,10 @@ N.B: The difference between startDate and endDate should be at maximum 20 days
 * ***Create an appointment***
 
 ```js
-import * as cosium from 'cosium-js-sdk'
+import * as sdk from 'cosium-js-sdk'
+
+sdk.configure({url: "https://www.example.com", credentials: {username: "username", password: "password"}})
+const cosium = sdk.create()
 
 const params = {
   "siteCode": "c1",
@@ -103,7 +109,10 @@ request parameter for calling the function:
 * ***Delete an appointment***
 
 ```js
-import * as cosium from 'cosium-js-sdk'
+import * as sdk from 'cosium-js-sdk'
+
+sdk.configure({url: "https://www.example.com", credentials: {username: "username", password: "password"}})
+const cosium = sdk.create()
 
 const params = {
  	"siteCode": "c1",
