@@ -1,8 +1,8 @@
 import test from 'ava'
-import sdk from '../../src/lib'
-import SDK from '../../src/class/sdk'
+import * as sdk from '../../src/lib'
+import SDK from '../../src/class'
 import mock from 'fetch-mock'
-import {UnknownCategoryCode, UnavailableSlot, MissingMandatoryParameter} from '../../src/class/exceptions/index'
+import {UnknownCategoryCode, UnavailableSlot, MissingMandatoryParameter} from '../../src/class/exceptions'
 
 let instance = {}
 
