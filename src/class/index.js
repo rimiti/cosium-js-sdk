@@ -1,21 +1,86 @@
-import SDK from './sdk'
-import jsonOverride from 'json-override'
+import Configuration from './configuration'
+import 'isomorphic-fetch'
+import Es6Promise from 'es6-promise'
 
-let configuration
+Es6Promise.polyfill()
 
-export default {
+export default class SDK extends Configuration {
+
+  constructor(config) {
+    super(config)
+  }
 
   /**
-   * @description Override default configuration
-   * @param config
+   * @description Get available timeslots between two dates
+   * @param params
+   * @return {*|Promise<Promise>|Promise.<TResult>}
    */
-  configure: (config) => configuration = jsonOverride(configuration, config),
+  getAvailableTimeslots(params) {
+    const options = {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        "siteCode": params.siteCode,
+        "startDate": params.startDate,
+        "endDate": params.endDate
+      })
+    }
+
+    return this.validateGetAvailableTimeslots(params)
+      .then(() => fetch(this.url + this.routes.availableTimeslots, options))
+      .then(response => this.httpStatus(response))
+      .then(response => this.errorCode(response))
+  }
 
   /**
-   * @description Instantiate SDK class
-   * @returns {SDK}
+   * @description Create appointment
+   * @param params
+   * @return {*|Promise<Promise>|Promise.<TResult>}
    */
-  create: () => new SDK(configuration)
+  createAppointment(params) {
+    const options = {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        "siteCode": params.siteCode,
+        "date": params.date,
+        "object": params.endDate,
+        "category": params.category,
+        "description": params.description,
+        "timeslotDurationInMinutes": params.timeslotDurationInMinutes,
+        "customer": {
+          "firstname": params.customer.firstname,
+          "lastname": params.customer.lastname,
+          "email": params.customer.email,
+          "phone": params.customer.phone
+        }
+      })
+    }
 
+    return this.validateCreateAppointment(params)
+      .then(() => fetch(this.url + this.routes.createAppointment, options))
+      .then(response => this.httpStatus(response))
+      .then(response => this.errorCode(response))
+  }
+
+  /**
+   * @description Cancel appointment
+   * @param params
+   * @return {*|Promise<Promise>|Promise.<TResult>}
+   */
+  cancelAppointment(params) {
+    const options = {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        "siteCode": params.siteCode,
+        "bookingId": params.bookingId
+      })
+    }
+
+    return this.validateCancelAppointment(params)
+      .then(() => fetch(this.url + this.routes.cancelAppointment, options))
+      .then(response => this.httpStatus(response))
+      .then(response => this.errorCode(response))
+  }
 }
-
