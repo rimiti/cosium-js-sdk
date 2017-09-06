@@ -5,7 +5,6 @@ export default class Authentication {
   constructor(credentials) {
     this.username = credentials.username
     this.password = credentials.password
-    this._checkConfiguration()
   }
 
   get username() {
@@ -29,7 +28,4 @@ export default class Authentication {
     return `Basic ${base64}`
   }
 
-  _checkConfiguration() {
-    if (!this.username || !this.password) throw new ConfigurationWrongCredentials()
-  }
 }
