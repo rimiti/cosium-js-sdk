@@ -1,12 +1,8 @@
 import test from 'ava'
 import * as sdk from '../../src/lib'
-import {ConfigurationWrongCredentials, ConfigurationWrongFormat} from '../../src/class/exceptions'
+import {ConfigurationWrongFormat} from '../../src/class/exceptions'
 
-test('Set empty username and password', t => {
-  const err = t.throws(() => sdk.create(), ConfigurationWrongCredentials)
-  t.is(err.name, `ConfigurationWrongCredentials`)
-  t.is(err.message, `Wrong credentials configuration`)
-})
+
 
 test('Set wrong format', t => {
   sdk.configure({format: "xml", credentials: {username: "username", password: "password"}})
