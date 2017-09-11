@@ -44,7 +44,7 @@ export default class SDK extends Configuration {
       body: JSON.stringify({
         "siteCode": params.siteCode,
         "date": params.date,
-        "object": params.endDate,
+        "object": params.object,
         "category": params.category,
         "description": params.description,
         "timeslotDurationInMinutes": params.timeslotDurationInMinutes,
