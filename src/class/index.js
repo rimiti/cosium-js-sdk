@@ -53,7 +53,8 @@ export default class SDK extends Configuration {
           "lastname": params.customer.lastname,
           "email": params.customer.email,
           "phone": params.customer.phone
-        }
+        },
+        "qualification": params.qualification
       })
     }
 
