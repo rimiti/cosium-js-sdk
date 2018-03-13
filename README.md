@@ -1,13 +1,13 @@
 # cosium-js-sdk
 
-[![Build Status](https://travis-ci.org/rimiti/cosium-js-sdk.svg?branch=master)](https://travis-ci.org/rimiti/cosium-js-sdk) [![Coverage Status](https://coveralls.io/repos/github/rimiti/cosium-js-sdk/badge.svg?branch=master)](https://coveralls.io/github/rimiti/cosium-js-sdk?branch=master) [![Issue Count](https://codeclimate.com/github/rimiti/cosium-js-sdk/badges/issue_count.svg)](https://codeclimate.com/github/rimiti/cosium-js-sdk) [![NPM version](https://badge.fury.io/js/cosium-js-sdk.svg)](https://badge.fury.io/js/cosium-js-sdk) [![Downloads](https://img.shields.io/npm/dt/cosium-js-sdk.svg)](https://img.shields.io/npm/dt/cosium-js-sdk.svg)
+[![Build Status](https://travis-ci.org/rimiti/cosium-js-sdk.svg?branch=master)](https://travis-ci.org/rimiti/cosium-js-sdk) [![Coverage Status](https://coveralls.io/repos/github/rimiti/cosium-js-sdk/badge.svg?branch=master)](https://coveralls.io/github/rimiti/cosium-js-sdk?branch=master) [![Issue Count](https://codeclimate.com/github/rimiti/cosium-js-sdk/badges/issue_count.svg)](https://codeclimate.com/github/rimiti/cosium-js-sdk) [![NPM version](https://badge.fury.io/js/cosium-js-sdk.svg)](https://badge.fury.io/js/cosium-js-sdk)
 
 
 Cosium Javascript SDK
 
 # Install
 ```
-$ npm install cosium-js-sdk
+$ npm install @rimiti/cosium-js-sdk --save
 ```
 
 ## Available methods
@@ -15,7 +15,7 @@ $ npm install cosium-js-sdk
 * ***Getting available timeslots***
 
 ```js
-import * as sdk from 'cosium-js-sdk'
+import * as sdk from '@rimiti/cosium-js-sdk'
 
 sdk.configure({url: "https://www.example.com", credentials: {username: "username", password: "password"}})
 const cosium = sdk.create()
@@ -58,7 +58,7 @@ N.B: The difference between startDate and endDate should be at maximum 20 days
 * ***Create an appointment***
 
 ```js
-import * as sdk from 'cosium-js-sdk'
+import * as sdk from '@rimiti/cosium-js-sdk'
 
 sdk.configure({url: "https://www.example.com", credentials: {username: "username", password: "password"}})
 const cosium = sdk.create()
@@ -109,7 +109,7 @@ request parameter for calling the function:
 * ***Delete an appointment***
 
 ```js
-import * as sdk from 'cosium-js-sdk'
+import * as sdk from '@rimiti/cosium-js-sdk'
 
 sdk.configure({url: "https://www.example.com", credentials: {username: "username", password: "password"}})
 const cosium = sdk.create()
